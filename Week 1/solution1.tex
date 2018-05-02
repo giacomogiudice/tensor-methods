@@ -1,0 +1,108 @@
+\documentclass[a4paper,10pt,twoside]{article}
+%%%%%%%%%%% Packages %%%%%%%%%%
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb,mathtools}
+\usepackage{fancyhdr}
+\usepackage{sectsty}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{bbm}
+\usepackage{braket}
+
+
+%%%%%%%%%%% Macros %%%%%%%%%%
+\def \dd {{\rm d}}
+\def \id {{\mathbbm{1}}}
+\def \note#1 {\paragraph{\bfseries #1}}
+\DeclareMathOperator{\trace}{tr}
+
+\pagestyle{fancy}
+\renewcommand{\footrulewidth}{1pt}
+
+\fancyhf{}
+\lhead{20/04/2017}
+\chead{Quantum Information Methods in Many-Body Physics}
+\rhead{PH2269}
+\lfoot{Giacomo Giudice~~~~giacomo.giudice@mpq.mpg.de}
+\rfoot{Page \thepage}
+
+\allsectionsfont{\normalfont\sffamily}
+
+%%%%%%%%%%% Here Begins Document %%%%%%%%%%
+\begin{document}
+\title{\vspace{-1cm}\sffamily Solutions to Homework 1\vspace{-1cm}}
+\author{}
+\date{}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{section}{}
+Remember that $\trace_B (\bullet) = \sum_n \bra{\varphi_n}_B \bullet  \ket{\varphi_n}_B$. Then
+\[
+  \trace_B\left( \ket{\Psi}_{A B} \bra{\Psi}\right) 
+  = \sum_{n,n^\prime,m} \sqrt{\lambda_n} \sqrt{\lambda_{n^\prime}} \ket{\varphi_n}_A \underbrace{\braket{\varphi_m | \varphi_n}_B}_{\delta_{m,n}} \underbrace{\braket{\varphi_{n^\prime} | \varphi_m}_B}_{\delta_{n^\prime,m}} \bra{\varphi_{n^\prime}}_A 
+  = \sum_m \lambda_m \ket{\varphi_m}_A \bra{\varphi_m}_A
+  = \rho .
+\]
+We notice that the dimension of the ancilla corresponds to the rank of $\rho$.
+\end{section}
+
+\begin{section}{}
+The inequality (a) is just a restatement of the strong subadditivity
+\begin{align*}
+  I(A,B:C) &\geq I(B:C) \\
+  S(A,B) + S(C) - S(A,B,C) &\geq S(B) + S(C) - S(B,C) \\
+  S(A,B) + S(B,C) &\geq  S(A,B,C) + S(B)
+\end{align*}
+Hence adding a system never decreases the mutual information.
+For (b), we use the properties  $S(A,B) \leq S(A) + S(B)$ and $S(A,B) \geq | S(A) - S(B) | \geq S(A) - S(B)$.
+\begin{align*}
+  I(A,B:C) = \underbrace{S(A,B)}_{\mathclap{\leq S(A) + S(B)}} + S(C) - \underbrace{S(A,B,C)}_{\mathclap{\geq |S(B,C) - S(A)|}} \leq 2S(A) + S(B) + S(C) - S(B,C) = I(B:C) + 2S(A).
+\end{align*}
+Combined, these two inequalities yield  $I(B:C) \leq I(A,B:C) \leq I(B:C) + 2S(A)$. 
+Intuitively, it means the following: by adding into consideration system $A$, we will increase the mutual information, or correlations. However, this increase is bounded by twice the entropy of $A$. 
+\end{section}
+
+\begin{section}{}
+In the computational basis we write the state as $\ket{\Psi} = \sum_{ij} c_{ij} \ket{i,j}$. We then compute $c^\dag c$ or $cc^\dag$
+\[
+  c=\frac{1}{\sqrt{30}}
+  \begin{pmatrix}
+    2\sqrt{2} - 1 & 2\sqrt{2} + 1\\
+    -2 - \sqrt{2} & 2 - \sqrt{2} \\
+  \end{pmatrix},
+  \quad
+  c^\dag c=\frac{1}{6}
+  \begin{pmatrix}
+    3 & 1\\
+    1 & 3\\
+  \end{pmatrix}.
+\]
+
+The eigenvalues of $c^\dag c$ are given by the roots of the characteristic polynomial $p(\lambda) = (1/2 - \lambda)^2 - (1/6)^2$, from which we obtain $\lambda_1 = 2/3, \lambda_2 = 1/3$.
+The entanglement is then
+\[
+  E = -\sum_n \lambda_n \log_2 \lambda_n = \frac{2}{3} \log_2{\frac{3}{2}} + \frac{1}{3} \log_2{3} = \log_2{3} - \frac{2}{3} \approx 0.9183 .
+\]
+\end{section}
+
+\begin{section}{}
+Computing each $c_{ij}$ yields
+\[
+  c=\frac{1}{\sqrt{3}}
+  \begin{pmatrix}
+    0 & 0 & -1\\
+    0 & 1 & 0\\
+    -1 & 0 & 0
+  \end{pmatrix}
+\]
+We notice that $c c^\dag$ is diagonal, so the eigenvalues are $1/3$.
+Hence the entanglement is 
+\[
+  E = -3(1/3)\log_2(1/3) = \log_2{3} \approx 1.585.
+\]
+\end{section}
+
+
+\end{document}
+%%%%%%%%%%% Here Ends Document %%%%%%%%%%

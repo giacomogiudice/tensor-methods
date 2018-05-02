@@ -1,0 +1,106 @@
+\documentclass[a4paper,10pt,twoside]{article}
+%%%%%%%%%%% Packages %%%%%%%%%%
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb,mathtools}
+\usepackage{fancyhdr}
+\usepackage{sectsty}
+\usepackage{enumitem}
+\usepackage{bbm}
+\usepackage{braket}
+
+
+%%%%%%%%%%% Macros %%%%%%%%%%
+\def \dd {{\rm d}}
+\def \id {{\mathbbm{1}}}
+\def \note#1 {\paragraph{\bfseries #1}}
+\DeclareMathOperator{\trace}{tr}
+
+%%%%%%%%%%% Formatting %%%%%%%%%%
+\pagestyle{fancy}
+\renewcommand{\footrulewidth}{1pt}
+
+\fancyhf{}
+\lhead{20/04/2017}
+\chead{Quantum Information Methods in Many-Body Physics}
+\rhead{PH2269}
+\lfoot{Giacomo Giudice~~~~giacomo.giudice@mpq.mpg.de}
+\rfoot{Page \thepage}
+
+\allsectionsfont{\normalfont\sffamily}
+
+%%%%%%%%%%% Here Begins Document %%%%%%%%%%
+\begin{document}
+\title{\vspace{-1cm}\sffamily Homework 1\vspace{-1cm}}
+\author{}
+\date{}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{section}{Every Mixed State is a Reduced State}
+A generic density operator $\rho$ can be written as $\rho = \sum_n \lambda_n \ket{\varphi_n}\bra{\varphi_n}$, with $\{ \varphi_n \}$ a complete set of basis states satisfying $\braket{\varphi_n | \varphi_m} = \delta_{n,m}$.
+Explain why this is possible and why all the eigenvalues $\lambda_n$ are real and $\lambda_n \geq 0$.
+
+We will now show that it is always possible to construct a purification of some system $A$ by introducing an additional copy of the system called $B$.
+Starting from the pure state
+\[ 
+  \ket{\Psi}_{A B} = \sum_n \sqrt{\lambda_n} \ket{\varphi_n}_A \ket{\varphi_n}_B
+\]
+show that we obtain the reduced state $\rho$ for $A$ by tracing out $B$.
+\note{Bonus} This was obtained with an ancilla of the same dimension as the system. Can we obtain a purification with an ancilla of a smaller dimension? What constraints would that introduce on $\rho$?
+\end{section}
+
+\begin{section}{Mutual Information Inequalities}
+Let $A_1$, $B$ and $C$ be three quantum systems. 
+Prove the following inequalities:
+\begin{enumerate}[label=(\alph*)]
+\item $I(A,B:C) \geq I(B:C)$,
+\item $I(A,B:C) \leq I(B:C) + 2S(A)$.
+\end{enumerate}
+\end{section}
+
+\begin{section}{A Two-Qubit State}
+Compute the entanglement of the two-qubit state
+\[
+  \ket{\Psi} = \frac{-(1 - 2\sqrt{2})\ket{00}  - (2 + \sqrt{2})\ket{10} + (1+2\sqrt{2})\ket{01} + (2 - \sqrt{2})\ket{11}}{\sqrt{30}} .
+\]
+\end{section}
+\begin{section}{Something That Will Come Back Later On}
+For spin-1/2 systems, we denote the Pauli matrices as
+\[
+  \sigma^x=
+  \begin{pmatrix}
+    0 & 1\\
+    1 & 0
+  \end{pmatrix},
+  \quad
+  \sigma^y=
+  \begin{pmatrix}
+    0 & -i\\
+    i & 0
+  \end{pmatrix},
+  \quad
+  \sigma^z=
+  \begin{pmatrix}
+    1 & 0\\
+    0 & -1
+  \end{pmatrix}.
+\]
+There, I wrote them down once, and I won't bother doing it in the next assignments.
+Additionally, we define the raising and lowering operators as $\sigma^\pm = (\sigma^x \pm i\sigma^y)/2$.
+
+Let $\{\ket{+}, \ket{0}, \ket{-}\}$ be the standard basis for a spin-1 system. 
+We will now construct a two-particle state in a slightly unusual way as 
+\[
+  \ket{\Psi} = \sum_{\mathclap{ i,j = +,0,-}} c_{ij} \ket{i j}, \quad{\rm where} \; c_{i j} = \frac{1}{\sqrt{3}}\trace{\left(A^i A^j\right)}
+\]
+and the matrices $\{ A^i \}$ are defined as
+\[
+  A^+ = \sigma^+, \quad A^0 = -\frac{1}{\sqrt{2}} \sigma^z, \quad A^- = -\sigma^- \,.
+\]
+Compute the entanglement between the two particles.
+%\note{Note} You can write a computer programs to help you with the linear algebra.
+\end{section}
+
+
+\end{document}
+%%%%%%%%%%% Here Ends Document %%%%%%%%%%
