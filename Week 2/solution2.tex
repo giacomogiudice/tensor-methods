@@ -11,7 +11,7 @@
 \usepackage{tikz,calc}
 
 %%%%%%%%%%% Macros %%%%%%%%%%
-\def \note#1 {\paragraph{\bfseries #1}}
+\def \note#1 {\vspace{-1em}\paragraph{\bfseries #1}}
 \def \dd {{\rm d}}
 \def \id {{\mathbbm{1}}}
 \def \order {\mathcal{O}}
@@ -29,15 +29,15 @@
 \tikzstyle{index} = [-,thick,font=\footnotesize]
 \tikzstyle{virtual} = [-,thick,dotted,font=\footnotesize]
 
-
 \def\pair{\tikz[baseline=-0.5ex]{
 \fill (0,0) circle (1.5pt) coordinate (A);
 \fill (1.5ex,0) circle (1.5pt) coordinate (B);
 \draw (A)--(B);}
 }
+
 %%%%%%%%%%% Formatting %%%%%%%%%%
 \pagestyle{fancy}
-\renewcommand{\footrulewidth}{1pt}
+\renewcommand{\footrulewidth}{0.5pt}
 
 \fancyhf{}
 \lhead{27/04/2017}
@@ -179,8 +179,6 @@ By introducing $A^\sigma = M^\sigma \Sigma$ we obtain the desired form.
   \end{pmatrix}.
 \]
 \begin{section}{}
-\note{Note} The choice of the tensors is not unique, you may well find a different combination that works.
-
 \begin{enumerate}[label=(\alph*)]
 \item A bond dimension $D=1$ is sufficient: $A^0 = 0$, $A^1 = 1$.
 \item Here we need to introduce a mimimum of $D=2$
@@ -236,11 +234,12 @@ By introducing $A^\sigma = M^\sigma \Sigma$ we obtain the desired form.
     \end{pmatrix}.
 \end{align*}
 \end{enumerate}
+\note{Note} The choice of the tensors is not unique, you may well find a different combination that works.
 \end{section}
 
 
 \begin{section}{}
-The proposed solution is written as a \textsc{Matlab} script, see file \texttt{multent.m} provided. 
+The proposed solution the \textsc{Matlab} script \texttt{multent.m} provided. 
 The easiest way to approach the problem is to define the tensor $c_{ijkl}$, reshape it into the desired matrix, and then perform an SVD decomposition. 
 Care should be taken when constructing the state, since most routines use column-major versus row-major reshaping.
 

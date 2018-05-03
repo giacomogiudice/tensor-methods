@@ -13,7 +13,7 @@
 
 
 %%%%%%%%%%% Macros %%%%%%%%%%
-\def \note#1 {\paragraph{\bfseries #1}}
+\def \note#1 {\vspace{-1em}\paragraph{\bfseries #1}}
 \def \dd {{\rm d}}
 \def \id {{\mathbbm{1}}}
 \def \order {\mathcal{O}}
@@ -23,9 +23,8 @@
 %%%%%%%%%%% Tikz Definitions %%%%%%%%%%
 \usetikzlibrary{shapes, arrows,positioning,fit}
 \tikzstyle{plain} = [draw,thick,circle,inner sep=0,minimum size=0.5cm,font=\footnotesize]
-\tikzstyle{mps} = [draw,thick,circle,fill=blue!40,inner sep=0,minimum size=0.5cm]
-\tikzstyle{mpo} = [draw,thick,diamond,fill=red!60,inner sep=0,minimum size=0.5cm]
-\tikzstyle{blob} = [draw,thick,rectangle,rounded corners=.25cm,fill=blue!40]
+\tikzstyle{mps} = [draw,thick,rectangle,rounded corners=.1cm,inner sep=0,minimum size=0.5cm]
+\tikzstyle{mpo} = [draw,thick,circle,inner sep=0,minimum size=0.5cm]
 \tikzstyle{index} = [-,thick,font=\footnotesize]
 \tikzstyle{virtual} = [-,thick,dotted,font=\footnotesize]
 
@@ -35,9 +34,10 @@
 \fill (1.5ex,0) circle (1.5pt) coordinate (B);
 \draw (A)--(B);}
 }
+
 %%%%%%%%%%% Formatting %%%%%%%%%%
 \pagestyle{fancy}
-\renewcommand{\footrulewidth}{1pt}
+\renewcommand{\footrulewidth}{0.5pt}
 
 \fancyhf{}
 \lhead{27/04/2017}
