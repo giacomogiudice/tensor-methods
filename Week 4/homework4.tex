@@ -1,0 +1,253 @@
+\documentclass[a4paper,10pt,twoside]{article}
+%%%%%%%%%%% Packages %%%%%%%%%%
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb,mathtools}
+\usepackage{fancyhdr}
+\usepackage{sectsty}
+\usepackage{graphicx,wrapfig}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{braket}
+\usepackage{bbm}
+\usepackage{tikz,calc}
+\usepackage{amsthm}
+
+
+%%%%%%%%%%% Macros %%%%%%%%%%
+\def \note#1 {\vspace{-1em}\paragraph{\bfseries #1}}
+\def \dd {{\rm d}}
+\def \id {{\mathbbm{1}}}
+\def \order {\mathcal{O}}
+\def\bquad{\mkern-18mu}
+\DeclareMathOperator{\trace}{tr}
+\DeclareMathOperator{\spanset}{span}
+
+%%%%%%%%%%% Tikz Definitions %%%%%%%%%%
+\usetikzlibrary{shapes, arrows,positioning,fit}
+\tikzstyle{plain} = [draw,thick,circle,inner sep=0,minimum size=0.5cm,font=\footnotesize]
+\tikzstyle{mps} = [draw,thick,rectangle,rounded corners=.1cm,inner sep=0,minimum size=0.5cm]
+\tikzstyle{mpo} = [draw,thick,circle,inner sep=0,minimum size=0.5cm]
+\tikzstyle{index} = [-,thick,font=\footnotesize]
+\tikzstyle{virtual} = [-,thick,dotted,font=\footnotesize]
+
+\def \tu {0.25cm}
+
+%%%%%%%%%%% Formatting %%%%%%%%%%
+\pagestyle{fancy}
+\renewcommand{\footrulewidth}{0.5pt}
+
+\fancyhf{}
+\lhead{11/05/2017}
+\chead{Quantum Information Methods in Many-Body Physics}
+\rhead{PH2269}
+\lfoot{Giacomo Giudice~~~~giacomo.giudice@mpq.mpg.de}
+\rfoot{Page \thepage}
+
+\allsectionsfont{\normalfont\sffamily}
+
+\newtheoremstyle{modern}{3pt}{3pt}{\itshape}{}{\sffamily\bfseries}{}{.5em}{}
+\theoremstyle{modern}
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{theorem}[lemma]{Theorem}
+
+%%%%%%%%%%% Here Begins Document %%%%%%%%%%
+\begin{document}
+\title{\vspace{-1cm}\sffamily Homework 3\vspace{-1cm}}
+\author{}
+\date{}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{section}{The Cluster State}
+The group $\mathrm{Z}_2 \times \mathrm{Z}_2$ has the presentation $\mathrm{Z}_2 \times \mathrm{Z}_2 = \Braket{ x,z | x^2 = z^2 = \mathbf{1}, xz = zx}$, where $\mathbf{1}$ is the identity element.
+\begin{enumerate}[label=(\alph*)]
+\item Show that the Pauli matrices $\{X,Y,Z\}$ form a \emph{projective representation} of this group, i.e. $v_g v_h = e^{i \omega(g,h)} v_{gh}$.
+\item What are the possible values of $e^{i \omega(g,h)}$?
+\item Can the Pauli representation form a \emph{linear representation}? 
+That is, can we rephase $v_g \to e^{i\phi_g} v_g$ to make the commutator zero?
+\end{enumerate}
+\note{Hint} Define $v_x = X$, $v_z = Z$, $v_{xz} = Y$.
+
+The cluster state Hamiltonian is
+\[
+  H_c = - \sum_{i=1}^N Z_{i-1} X_i Z_{i+1} .
+\]
+The ground state $\ket{\psi_c}$ is an MPS of bond dimension $D=2$. 
+In the computational basis,
+\[
+  A^0 = \ket{0}\bra{+}, \quad A^1 = \ket{1}\bra{-}, \quad \mbox{where}\ \ket{\pm} = \frac{\ket{0} \pm \ket{1}}{\sqrt{2}}.
+\]
+There are two operations that leave the state invariant, namely
+\[
+  X_{\rm odd} = \bigotimes_{i~{\rm odd}} X_i, \quad X_{\rm even} = \bigotimes_{i~{\rm even}} X_i.
+\]
+Check if these operators commute with the Hamiltonian.
+What is the \emph{symmetry group} of the cluster state?
+Show that it is $\mathrm{Z}_2 \times \mathrm{Z}_2$.
+Now prove the following properties:
+\[
+  {
+  \tikz[baseline=0,node distance=0.5*\tu]{
+    \node[mps,] (a) {$A$};
+    \node[plain,above=of a] (u) {$X$};
+    \draw[index] (a.west) -- +(-\tu,0);
+    \draw[index] (a.east) -- +(\tu,0);
+    \draw[index] (u.north) -- +(0,\tu);
+    \draw[index] (a.north) -- (u.south);
+    }
+  }
+  = 
+  {
+  \tikz[baseline=0,node distance=\tu]{
+    \node[mps,] (a) {$A$};
+    \node[plain,left=of a] (v) {$X$};
+    \node[plain,right=of a] (vdag) {$Z$};
+    \draw[index] (v.west) -- +(-\tu,0);
+    \draw[index] (vdag.east) -- +(\tu,0);
+    \draw[index] (v.east) -- +(\tu,0);
+    \draw[index] (a.east) -- +(\tu,0);
+    \draw[index] (a.north) -- +(0,\tu);
+    \draw[index] (v.east) -- (a.west);
+    \draw[index] (vdag.west) -- (a.east);
+    }
+  }\ ,
+  \qquad
+  {
+  \tikz[baseline=0,node distance=\tu]{
+    \node[mps,] (a) {$A$};
+    \node[plain,left=of a] (v) {$Z$};
+    \node[plain,right=of a] (vdag) {$X$};
+    \draw[index] (v.west) -- +(-\tu,0);
+    \draw[index] (vdag.east) -- +(\tu,0);
+    \draw[index] (v.east) -- +(\tu,0);
+    \draw[index] (a.east) -- +(\tu,0);
+    \draw[index] (a.north) -- +(0,\tu);
+    \draw[index] (v.east) -- (a.west);
+    \draw[index] (vdag.west) -- (a.east);
+    }
+  }
+  =
+  {
+  \tikz[baseline=0,node distance=\tu]{
+    \node[mps,] (a) {$A$};
+    \draw[index] (a.west) -- +(-\tu,0);
+    \draw[index] (a.east) -- +(\tu,0);
+    \draw[index] (a.north) -- +(0,\tu);
+    }
+  }\ .
+\]
+By blocking two sites, show that 
+\[
+  {
+  \tikz[baseline=0,node distance=\tu]{
+    \node[mps] at (\tu,0) (m1) {$A$};
+    \node[mps,right=\tu of m1] (m2) {$A$};
+    \node[plain,above=0.5*\tu of m1] (u) {$X$};
+    \draw[index] (m1.west) -- +(-\tu,0);
+    \draw[index] (m2.east) -- +(\tu,0);
+    \draw[index] (m2.north) -- +(0,\tu);
+    \draw[index] (m1.north) -- (u.south);
+    \draw[index] (m1.east) -- (m2.west);
+    \draw[index] (u.north) -- +(0,\tu);
+    }
+  }
+  = 
+  {
+  \tikz[baseline=0,node distance=\tu]{
+    \node[mps] at (\tu,0) (m1) {$A$};
+    \node[mps,right=\tu of m1] (m2) {$A$};
+    \node[plain,left=of m1] (v) {$X$};
+    \node[plain,right=of m2] (vdag) {$X$};
+    \draw[index] (m1.east) -- (m2.west);
+    \draw[index] (m1.north) -- +(0,\tu);
+    \draw[index] (m2.north) -- +(0,\tu);
+    \draw[index] (v.west) -- +(-\tu,0);
+    \draw[index] (vdag.east) -- +(\tu,0);
+    \draw[index] (m1.west) -- (v.east);
+    \draw[index] (m2.east) -- (vdag.west);
+    }
+  }\ ,
+  \qquad
+  {
+  \tikz[baseline=0,node distance=\tu]{
+    \node[mps] at (\tu,0) (m1) {$A$};
+    \node[mps,right=of m1] (m2) {$A$};
+    \node[plain,above=0.5*\tu of m2] (u) {$X$};
+    \draw[index] (m1.west) -- +(-\tu,0);
+    \draw[index] (m2.east) -- +(\tu,0);
+    \draw[index] (m1.north) -- +(0,\tu);
+    \draw[index] (m2.north) -- (u.south);
+    \draw[index] (m1.east) -- (m2.west);
+    \draw[index] (u.north) -- +(0,\tu);
+    }
+  }
+  = 
+  {
+  \tikz[baseline=0,node distance=\tu]{
+    \node[mps] at (\tu,0) (m1) {$A$};
+    \node[mps,right=of m1] (m2) {$A$};
+    \node[plain,left=of m1] (v) {$Z$};
+    \node[plain,right=of m2] (vdag) {$Z$};
+    \draw[index] (m1.east) -- (m2.west);
+    \draw[index] (m1.north) -- +(0,\tu);
+    \draw[index] (m2.north) -- +(0,\tu);
+    \draw[index] (v.west) -- +(-\tu,0);
+    \draw[index] (vdag.east) -- +(\tu,0);
+    \draw[index] (m1.west) -- (v.east);
+    \draw[index] (m2.east) -- (vdag.west);
+    }
+  }\ ,
+\]
+and explicitly write the different local representations $u_g$ and their associated matrices $V_g$.
+Graphically argue that cluster state is invariant under the operations in the symmetry group.
+\end{section}
+
+\begin{section}{Gauges and Symmetries}
+Remember that the gauge freedom for MPS is $A \mapsto G A G^{-1}$.
+Hence, we could imagine a unitary group acting as
+\[
+  {
+  \tikz[baseline=0*\tu,node distance=0.5*\tu]{
+    \node[mps,] (a) {$A$};
+    \node[plain,above=of a] (u) {$u_g$};
+    \draw[index] (a.west) -- +(-\tu,0);
+    \draw[index] (a.east) -- +(\tu,0);
+    \draw[index] (u.north) -- +(0,\tu);
+    \draw[index] (a.north) -- (u.south);
+    }
+  }
+  = 
+  {
+  \tikz[baseline=0*\tu,node distance=\tu]{
+    \node[mps,] (a) {$A$};
+    \node[plain,left=of a] (v) {$Y_g$};
+    \node[plain,right=of a] (vdag) {$Y^{\scalebox{0.6}{-1}}_g$};
+    \draw[index] (v.west) -- +(-\tu,0);
+    \draw[index] (vdag.east) -- +(\tu,0);
+    \draw[index] (v.east) -- +(\tu,0);
+    \draw[index] (a.east) -- +(\tu,0);
+    \draw[index] (a.north) -- +(0,\tu);
+    \draw[index] (v.east) -- (a.west);
+    \draw[index] (vdag.west) -- (a.east);
+    }
+  }
+\]
+However, by choosing a canonical form, this imposes the constraint that $Y_g$ be unitary.
+Show this, by taking the equation defining a canonical form, and assuming injective tensors.
+
+\note{Hint} For injective tensor the left and right fixed points are unique.
+\end{section}
+
+\begin{section}{The AKLT State, Because We Never Saw It Before}
+Construct the parent Hamiltonian of the AKLT state as the projector on the spin-2 subspace of two spin-1 particles (labeled 1 \& 2). 
+You should obtain 
+\[
+  h_{1,2} = \frac{1}{2} \vec{S}_1 \cdot \vec{S}_2 + \frac{1}{6}  (\vec{S}_1 \cdot \vec{S}_2)^2 + \frac{1}{3}
+\]
+\note{Hint} You may do this by brute force, or by being a little bit smart.
+Start by expanding $(\vec{S}_1 \cdot \vec{S}_2)^2$.
+What are its possible eigenvalues?
+Now, either construct a projector onto $S=2$ as a product of terms involving $(\vec{S}_1 + \vec{S}_2)^2$, or build a polynomial in terms of $X = \vec{S}_1 \cdot \vec{S}_2$ that satisfies the constraints above. 
+\end{section}
+\end{document}
+%%%%%%%%%%% Here Ends Document %%%%%%%%%%
