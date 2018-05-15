@@ -1,0 +1,339 @@
+\documentclass[a4paper,10pt,twoside]{article}
+%%%%%%%%%%% Packages %%%%%%%%%%
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb,mathtools}
+\usepackage{fancyhdr}
+\usepackage{sectsty}
+\usepackage{graphicx,wrapfig}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{braket}
+\usepackage{bbm}
+\usepackage{tikz,calc}
+\usepackage{amsthm}
+
+
+%%%%%%%%%%% Macros %%%%%%%%%%
+\def \note#1 {\vspace{-1em}\paragraph{\bfseries #1}}
+\def \dd {{\rm d}}
+\def \id {{\mathbbm{1}}}
+\def \order {\mathcal{O}}
+\def\bquad{\mkern-18mu}
+\DeclareMathOperator{\trace}{tr}
+\DeclareMathOperator{\spanset}{span}
+
+%%%%%%%%%%% Tikz Definitions %%%%%%%%%%
+\usetikzlibrary{shapes, arrows,positioning,fit}
+\tikzstyle{plain} = [draw,thick,circle,inner sep=0,minimum size=0.5cm,font=\footnotesize]
+\tikzstyle{mps} = [draw,thick,rectangle,rounded corners=.1cm,inner sep=0,minimum size=0.5cm]
+\tikzstyle{mpo} = [draw,thick,circle,inner sep=0,minimum size=0.5cm]
+\tikzstyle{index} = [-,thick,font=\footnotesize]
+\tikzstyle{virtual} = [-,thick,dotted,font=\footnotesize]
+
+\def \tu {0.25cm}
+
+%%%%%%%%%%% Formatting %%%%%%%%%%
+\pagestyle{fancy}
+\renewcommand{\footrulewidth}{0.5pt}
+
+\fancyhf{}
+\lhead{11/05/2017}
+\chead{Quantum Information Methods in Many-Body Physics}
+\rhead{PH2269}
+\lfoot{Giacomo Giudice~~~~giacomo.giudice@mpq.mpg.de}
+\rfoot{Page \thepage}
+
+\allsectionsfont{\normalfont\sffamily}
+
+\newtheoremstyle{modern}{3pt}{3pt}{\itshape}{}{\sffamily\bfseries}{}{.5em}{}
+\theoremstyle{modern}
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{theorem}[lemma]{Theorem}
+
+%%%%%%%%%%% Here Begins Document %%%%%%%%%%
+\begin{document}
+\title{\vspace{-1cm}\sffamily Solutions to Homework 4\vspace{-1cm}}
+\author{}
+\date{}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{section}{}
+\begin{enumerate}[label=(\alph*)]
+\item By defining $v_x = X$, $v_z = Z$, $v_{xz} = Y$,
+we obtain the following \emph{factor system} $e^{i \omega(g,h)}$, represented as a matrix,
+\[
+  \left\{e^{i \omega(g,h)}\right\}_{g,h} = 
+  \begin{pmatrix}
+    1 & 1 & 1 & 1 \\
+    1 & 1 & -i & i \\
+    1 & i & 1 & -i \\
+    1 & i & -i & 1 \\
+  \end{pmatrix}, \quad g,h = \mathbf{1},x,z,{xz} .
+\]
+\item See above.
+\item By changing the phase $v_g \to e^{i\phi_g} v_g$ the commutator becomes $e^{i (\phi_x + \phi_z)}(v_x v_z - v_z v_x)$ which is non-zero for every value of $\phi_x + \phi_z$.
+Since no rephasing can bring the commutator to zero, we deduce that the Pauli matrices cannot form a linear representation of this group.
+\end{enumerate}
+The symmetry of the cluster state is $G = \{ \id, X_{\rm odd}, X_{\rm even}, X_{\rm all}\}$, where $X_{\rm all} = X_{\rm even} \!\circ X_{\rm odd}$ (the group is abelian and these two terms commute). Notice that this group is $\mathrm{Z}_2 \times \mathrm{Z}_2$, since $X_{\rm even}^2 = X_{\rm odd}^2 = \id$, $[X_{\rm even} , X_{\rm odd}] = 0$.
+
+The properties of the cluster state are easily checked by using the properties of the Pauli matrices.
+By representing each entry $A^i$ in a vector,
+\[
+  {
+  \tikz[baseline=0,node distance=\tu]{
+    \node[mps,] (a) {$A$};
+    \draw[index] (a.west) -- +(-\tu,0);
+    \draw[index] (a.east) -- +(\tu,0);
+    \draw[index] (a.north) -- +(0,\tu);
+    }
+  }
+  =
+  \begin{pmatrix}
+    A^0 \\
+    A^1
+  \end{pmatrix}
+\]
+we obtain
+\begin{align*}
+  {
+  \tikz[baseline=0,node distance=\tu]{
+    \node[mps,] (a) {$A$};
+    \node[plain,left=of a] (v) {$X$};
+    \node[plain,right=of a] (vdag) {$Z$};
+    \draw[index] (v.west) -- +(-\tu,0);
+    \draw[index] (vdag.east) -- +(\tu,0);
+    \draw[index] (v.east) -- +(\tu,0);
+    \draw[index] (a.east) -- +(\tu,0);
+    \draw[index] (a.north) -- +(0,\tu);
+    \draw[index] (v.east) -- (a.west);
+    \draw[index] (vdag.west) -- (a.east);
+    }
+  }
+  &= 
+  \begin{pmatrix}
+    X \ket{0}\bra{+} Z \\
+    X \ket{1}\bra{-} Z
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    \ket{1}\bra{-} \\
+    \ket{0}\bra{+}
+  \end{pmatrix}
+  =  
+  {
+  \tikz[baseline=0,node distance=0.5*\tu]{
+    \node[mps,] (a) {$A$};
+    \node[plain,above=of a] (u) {$X$};
+    \draw[index] (a.west) -- +(-\tu,0);
+    \draw[index] (a.east) -- +(\tu,0);
+    \draw[index] (u.north) -- +(0,\tu);
+    \draw[index] (a.north) -- (u.south);
+    }
+  }\ ,\\
+  {
+  \tikz[baseline=0,node distance=\tu]{
+    \node[mps,] (a) {$A$};
+    \node[plain,left=of a] (v) {$Z$};
+    \node[plain,right=of a] (vdag) {$X$};
+    \draw[index] (v.west) -- +(-\tu,0);
+    \draw[index] (vdag.east) -- +(\tu,0);
+    \draw[index] (v.east) -- +(\tu,0);
+    \draw[index] (a.east) -- +(\tu,0);
+    \draw[index] (a.north) -- +(0,\tu);
+    \draw[index] (v.east) -- (a.west);
+    \draw[index] (vdag.west) -- (a.east);
+    }
+  }
+  &=
+  \begin{pmatrix}
+    Z \ket{0}\bra{+} X \\
+    Z \ket{1}\bra{-} X
+  \end{pmatrix}
+  = 
+  \begin{pmatrix}
+    \ket{0}\bra{+} \\
+    \ket{1}\bra{-}
+  \end{pmatrix}
+  =
+  {
+  \tikz[baseline=0,node distance=\tu]{
+    \node[mps,] (a) {$A$};
+    \draw[index] (a.west) -- +(-\tu,0);
+    \draw[index] (a.east) -- +(\tu,0);
+    \draw[index] (a.north) -- +(0,\tu);
+    }
+  }\ .
+\end{align*}
+We can use these properties to define the action of the symmetries on the pair of sites:
+\begin{align*}
+  (X_{i,i^\prime} \otimes \id_{j,j^\prime}) (A^{i^\prime} A^{j^\prime}) &= X A^i Z A^j (X X) = X (A^i A^j) X, \\
+  (\id_{i,i^\prime} \otimes X_{j,j^\prime}) (A^{i^\prime} A^{j^\prime}) &=  (Z Z) A^i X A^j Z = Z (A^i A^j) Z, \\
+  (X_{i,i^\prime} \otimes X_{j,j^\prime}) (A^{i^\prime} A^{j^\prime}) &= X A^i Z X A^j Z =  X Z A^i (X Z)^2 A^j X Z = -iY (A^i A^j) iY.
+\end{align*}
+Notice that the last one can be deduced immediately, since it the composition of the two previous symmetries, therefore $Z X = -i Y$.
+The different local representations $u_g$ and their actions on the virtual level can be summarized in the following table:
+\begin{center}
+\begin{tabular}{c|cccc}
+ $u_g$ & $\id \otimes \id$ & $X \otimes \id$ & $\id \otimes X$ & $X \otimes X$ \\
+ \hline
+ $V_g$ & $\id$ & $X$ & $Z$ & $-iY$ 
+\end{tabular}
+\end{center}
+These local operations are the building blocks for the global symmetries in $G$, as one can easily verify graphically.
+\end{section}
+
+\begin{section}{}
+We can think of the action of $u_g$ as ``passing $Y_g$ through $A$''
+\[
+  {
+  \tikz[baseline=0*\tu,node distance=\tu]{
+    \node[mps,] (a) {$A$};
+    \node[plain,above=0.5*\tu of a] (u) {$u_g$};
+    \node[plain,right=of a] (v) {$Y_g$};
+    \draw[index] (a.west) -- +(-\tu,0);
+    \draw[index] (u.north) -- +(0,\tu);
+    \draw[index] (v.east) -- +(\tu,0);
+    \draw[index] (a.north) -- (u.south);
+    \draw[index] (v.west) -- (a.east);
+    }
+  }
+  = 
+  {
+  \tikz[baseline=0*\tu,node distance=\tu]{
+    \node[mps,] (a) {$A$};
+    \node[plain,left=of a] (v) {$Y_g$};
+    \draw[index] (v.west) -- +(-\tu,0);
+    \draw[index] (v.east) -- +(\tu,0);
+    \draw[index] (a.east) -- +(\tu,0);
+    \draw[index] (a.north) -- +(0,\tu);
+    \draw[index] (v.east) -- (a.west);
+    }
+  }
+\]
+In the right canonical form, the \emph{only} fixed point is
+\[
+  {
+  \tikz[baseline=-2*\tu,node distance=\tu]{
+      \node[mps] (mconj) {$\bar{A}$};
+      \node[mps,below=of mconj] (m) {$A$};
+      \draw[index] (m.east) to[in=0,out=0] (mconj.east);
+      \draw[index] (m.north) -- (mconj.south);
+      \draw[index] (mconj.west) -- +(-\tu,0);
+      \draw[index] (m.west) -- +(-\tu,0);
+    }
+  }
+  =
+  {
+  \tikz[baseline=-2*\tu,node distance=\tu]{
+      \node[] (gconj) {};
+      \node[below=2*\tu of gconj] (g) {};
+      \draw[index] (g.east) to[in=0,out=0] (gconj.east);
+    }
+  }\ .
+\]
+By passing $Y_g$ through $A$ we obtain
+\[
+  {
+  \tikz[baseline=-0.4*\tu,node distance=\tu]{
+      \node[plain] (rho) {$Y_g Y_g^\dag$};
+      \draw[index] (rho.north) to[in=0,out=90] +(-0.5*\tu,0.5*\tu);
+      \draw[index] (rho.south) to[in=0,out=-90] +(-0.5*\tu,-0.5*\tu);
+    }
+  }
+  =
+  {
+  \tikz[baseline=-2*\tu,node distance=\tu]{
+      \node[plain] (gconj) {$\bar{Y}_g$};
+      \node[plain,below= of gconj] (g) {$Y_g$};
+      \draw[index] (g.east) to[in=0,out=0] (gconj.east);
+      \draw[index] (gconj.west) -- +(-\tu,0);
+      \draw[index] (g.west) -- +(-\tu,0);
+    }
+  }
+  =
+  {
+  \tikz[baseline=-2*\tu,node distance=\tu]{
+      \node[mps] (mconj) {$\bar{A}$};
+      \node[mps,below=of mconj] (m) {$A$};
+      \node[plain,left=of mconj] (gconj) {$\bar{Y}_g$};
+      \node[plain,left=of m] (g) {$Y_g$};
+      \draw[index] (m.east) to[in=0,out=0] (mconj.east);
+      \draw[index] (m.north) -- (mconj.south);
+      \draw[index] (gconj.east) -- (mconj.west);
+      \draw[index] (g.east) -- (m.west);
+      \draw[index] (gconj.west) -- +(-\tu,0);
+      \draw[index] (g.west) -- +(-\tu,0);
+    }
+  }
+  =
+  {
+  \tikz[baseline=-2*\tu,node distance=\tu]{
+      \node[plain] (mconj) {$\bar{Y}_g$};
+      \node[plain,below=of mconj] (m) {$Y_g$};
+      \node[mps,left=of mconj] (gconj) {$\bar{A}$};
+      \node[mps,left=of m] (g) {$A$};
+      \draw[index] (m.east) to[in=0,out=0] (mconj.east);
+      \draw[index] (g.north) -- (gconj.south);
+      \draw[index] (gconj.east) -- (mconj.west);
+      \draw[index] (g.east) -- (m.west);
+      \draw[index] (gconj.west) -- +(-\tu,0);
+      \draw[index] (g.west) -- +(-\tu,0);
+    }
+  }
+  =
+  {
+  \tikz[baseline=-2*\tu,node distance=\tu]{
+      \node[mps] (mconj) {$\bar{A}$};
+      \node[mps,below=of mconj] (m) {$A$};
+      \node[fit=(mconj)(m)] (f) {};
+      \node[plain,right=0 of f] (rho) {$Y_g Y_g^\dag$};
+      \draw[index] (rho.north west) to[in=0,out=145] (mconj.east);
+      \draw[index] (rho.south west) to[in=0,out=-145] (m.east);
+      \draw[index] (m.north) -- (mconj.south);
+      \draw[index] (mconj.west) -- +(-\tu,0);
+      \draw[index] (m.west) -- +(-\tu,0);
+    }
+  }\ ,
+\]
+where the two $u_g$ cancel out since they are unitary.
+Now, this equation means that $Y_g Y_G^\dag$ is a fixed point of the map. 
+By the unicity of the fixed point, $Y_g Y_G^\dag = \alpha \id$, with $\alpha$ a positive, real constant (since $Y_g Y_G^\dag \succeq 0$) which can be absorbed in $Y_g$.
+\end{section}
+
+\begin{section}{}
+
+Since $(\vec{S}_1 + \vec{S}_2)^2$ is the total spin has the eigenvalue equation
+\[
+  (\vec{S}_1 + \vec{S}_2)^2\ket{s,m_s} = \left(|S_1|^2 + 2 \vec{S}_1 \cdot \vec{S}_2 + |S_2|^2\right)\ket{s,m_s} = s(s+1)\ket{s,m_s} , \quad s = 0,1,2.
+\]
+Since $|S_1|^2 = |S_2|^2 = 2$, the scalar product can have the eigenvalues
+\[
+  \vec{S}_1 \cdot \vec{S}_2 = 
+  \begin{cases}
+    -2 & s=0\\
+    -1 & s=1\\
+    2 & s=2\\
+  \end{cases}
+\]
+\note{Method 1} Let $X = \vec{S}_1 \cdot \vec{S}_2$, we construct a second-degree polynomial $p(X)$ with the following properties
+\[
+  p(X) = 
+  \begin{cases}
+    0 & X=-2\\
+    0 & X=-1\\
+    2 & X=2\\
+  \end{cases}
+\]
+This can be constructed as
+\[
+  p(X) = \frac{1}{6}(X+2)(X+1) = \frac{X^2}{6} + \frac{X}{2} + \frac{1}{3}
+\]
+which is the desired expression.
+\note{Method 2} Alternatively, we construct a projector in terms of the total angular momentum that gives $\Pi_{s=2}=0$ for $s=0,1$ and $\Pi_{s=2}=1$ for $s=2$.
+\[
+  \Pi_{s=2} = \frac{1}{24}\underbrace{\left( (\vec{S}_1 + \vec{S}_2)^2 -2\right)}_{=0~\text{for}~\ket{s=1}}\underbrace{\left(\vec{S}_1 + \vec{S}_2)^2\right)}_{=0~\text{for}~\ket{s=0}} = \frac{1}{2} \vec{S}_1 \cdot \vec{S}_2 + \frac{1}{6}  (\vec{S}_1 \cdot \vec{S}_2)^2 + \frac{1}{3} = h_{1,2} .
+\]
+\end{section}
+\end{document}
+%%%%%%%%%%% Here Ends Document %%%%%%%%%%
