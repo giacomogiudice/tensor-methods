@@ -21,6 +21,10 @@ Covers the fundamental notions on entanglement and area laws covered during the 
   Covers many topics of this course in a very clear way.
   * F. Verstraete, V. Murg, and J.I. Cirac, _Matrix product states, projecd entangled pair states, and variational renormalization group methods for quantum spin systems_, Advances in Physics (2008) [arXiv:0907.2796](https://arxiv.org/abs/0907.2796).
 
+### The Toric Code
+  * A. Kitaev, _Fault-tolerant quantum computation by anyons_, Annals of Physics (2003) [arXiv:quant-ph/9707021](https://arxiv.org/abs/quant-ph/9707021). The original paper, recommended reading (at least the first three sections).
+  * A. Kitaev, C. Laumann, _Topological phases and quantum computation_, Lecture notes at Les Houches summer school (2009) [arXiv:0904.2771](https://arxiv.org/abs/0904.2771).
+
 ### Numerical Methods  
   * U. Schollwöck, _The density-matrix renormalization group in the age of matrix product states_, Annals of Physics (2011) [arXiv:1008.3477](https://arxiv.org/abs/1008.3477).
   An excellent review on the numerical methods for MPS.
