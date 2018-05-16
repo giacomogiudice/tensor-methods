@@ -78,9 +78,9 @@ Argue that this state is a ground state of the toric code.
 We will now see how to interpret the state $\ket{\Psi^0}$.
 Convince yourself that we can rewrite the ground state as
 \[
-   \ket{\Psi^0} = \frac{1}{2^{N/2}}\left( \id + \sum_{n=1}^N \prod_{p_1 \neq \dots \neq p_n} \!\! B_{p_1}\dots B_{p_n}\right) \ket{0 0 \dots 0 0} .
+   \ket{\Psi^0} = \frac{1}{2^{N/2}}\left( \id + \sum_{n=1}^N \sum_{p_1 \neq \dots \neq p_n} \!\! B_{p_1}\dots B_{p_n}\right) \ket{0 0 \dots 0 0} .
 \]
-where the product runs over all possible combinations of $n$ \emph{distinct} plaquettes.
+where the second sum runs over all possible combinations of $n$ \emph{distinct} plaquettes.
 Now consider a subset of adjacent plaquettes. 
 Using the notation introduced in the lecture, show that the action of their $B_v$ on the vacuum state gives a closed loop.
 Can you see why we say that the ground state is the sum over all possible loop configurations?
@@ -89,11 +89,11 @@ Can you see why we say that the ground state is the sum over all possible loop c
 \includegraphics[width=0.25\textwidth]{img/torus-loops}
 \end{wrapfigure}
 
-On the torus, there are then additional ground states, $ \ket{\Psi_{ij}^0} = \hat{X}_{\rm 1}^i \hat{X}_{\rm 2}^j \ket{\Psi^0}$, with $ i,j = 0,1$.
+On the torus, there are then additional ground states, $ \ket{\Psi_{ij}^0} = \hat{X}_1^i \hat{X}_2^j \ket{\Psi^0}$, with $ i,j = 0,1$.
 The operators $\hat{X}_{1,2}$ flip all the spins along the paths $l_{1,2}$, as shown in the figure.
 Show that this is equivalent to
 \[
-  \ket{\Psi_{ij}^0} = \sum_{\mathclap{{\rm loop} \left| \substack{\#_1 = i \\ \#_2 = j } \right. }}  \ \ket{\rm loop} .
+  \ket{\Psi_{ij}^0} = \frac{1}{\sqrt{\rm norm}}\sum_{\mathclap{{\rm loop} \left| \substack{\#_1 = i \\ \#_2 = j } \right. }}  \ \ket{\rm loop} .
 \]
 Where $\#_1$($ \#_2$) count the number of horizontal (vertical) crossings, modulo 2.
 Argue why $\#_{1,2}$ do not depend on the location of the cut.
@@ -113,9 +113,9 @@ We now define the excited states
 \[
   \ket{\Psi_{s_1,s_2}^{(e)}} =  W_l^{(e)} \ket{\Psi^0}, \quad \ket{\Psi_{p_1,p_2}^{(m)}} =  W_{l^*}^{(m)} \ket{\Psi^0}.
 \]
-Show that these states are eigenstates of $H$ and have an energy contribution $+2$ relative to the ground state.
+Show that these states are eigenstates of $H$ and have an energy contribution $+4$ relative to the ground state.
 As a matter of fact, they are the first excited states.
-\note{Note} Notice how the energy constribution does not depend on the length of the path.
+\note{Note} Notice how the energy contribution does not depend on the length of the path, we say that the charges are \emph{deconfined}.
 \end{section}
 
 \begin{section}{Composite Excitations}
@@ -124,9 +124,8 @@ What are the self-statistics of this particle?
 \end{section}
 
 \begin{section}{Boundaries and More}
-The toric code can be generalized to planar graphs, since we can still define $A_v$ and $B_p$, while preserving $[A_v,B_p] = 0$.
-Additionally, we should keep the vertices at the edges \emph{open}, i.e. they don't have a corresponding $A_v$ term (this is also called rough boundary conditions). Do you see why?
-Predict the number of ground states of the toric code with two punctures.
+The toric code can be generalized to planar graphs\footnote{Additionally, we should keep the vertices at the edges \emph{open}, i.e. they don't have a corresponding $A_v$ term (this is also called rough boundary conditions). Do you see why?}, since we can still define $A_v$ and $B_p$, while preserving $[A_v,B_p] = 0$.
+Predict the number of ground states of the toric code on a square lattice with two holes and periodic boundary conditions.
 \begin{figure}[h]
   \centerline{\includegraphics[width=0.25\textwidth]{img/lattice-holes.pdf}}
 \end{figure}
