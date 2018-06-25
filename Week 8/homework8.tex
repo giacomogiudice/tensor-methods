@@ -1,0 +1,121 @@
+\documentclass[a4paper,10pt,twoside]{article}
+%%%%%%%%%%% Packages %%%%%%%%%%
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb,mathtools}
+\usepackage{fancyhdr}
+\usepackage{sectsty}
+\usepackage{graphicx,wrapfig}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{braket}
+\usepackage{bbm}
+\usepackage{tikz,calc}
+
+%%%%%%%%%%% Macros %%%%%%%%%%
+\def \note#1 {\vspace{-1em}\paragraph{\bfseries #1}}
+\def \dd {{\rm d}}
+\def \id {{\mathbbm{1}}}
+\def \order {\mathcal{O}}
+\def\bquad{\mkern-18mu}
+\DeclareMathOperator{\trace}{tr}
+\DeclareMathOperator{\spanset}{span}
+
+%%%%%%%%%%% Tikz Definitions %%%%%%%%%%
+\usetikzlibrary{shapes, arrows,positioning,fit}
+\tikzstyle{plain} = [draw,thick,circle,inner sep=0,minimum size=0.5cm,font=\footnotesize]
+\tikzstyle{mps} = [draw,thick,rectangle,rounded corners=.1cm,inner sep=0,minimum size=0.5cm]
+\tikzstyle{mpo} = [draw,thick,circle,inner sep=0,minimum size=0.5cm]
+\tikzstyle{index} = [-,thick,font=\footnotesize]
+\tikzstyle{virtual} = [-,thick,dotted,font=\footnotesize]
+\tikzstyle{site} = [draw,solid,circle,minimum size=2pt,inner sep=0pt,outer sep=0pt,fill=black]
+
+\def \tu {0.25cm}
+
+%%%%%%%%%%% Formatting %%%%%%%%%%
+\pagestyle{fancy}
+\renewcommand{\footrulewidth}{0.5pt}
+
+\fancyhf{}
+\lhead{29/07/2017}
+\chead{Quantum Information Methods in Many-Body Physics}
+\rhead{PH2269}
+\lfoot{Giacomo Giudice~~~~giacomo.giudice@mpq.mpg.de}
+\rfoot{Page \thepage}
+
+\allsectionsfont{\normalfont\sffamily}
+
+%%%%%%%%%%% Here Begins Document %%%%%%%%%%
+\begin{document}
+\title{\vspace{-1cm}\sffamily Homework 8\vspace{-1cm}}
+\author{}
+\date{}
+\maketitle
+\thispagestyle{fancy}
+
+\begin{section}{Trotter--Suzuki Decompositions}
+For two operators $A$ and $B$, the Baker--Campbell--Hausdorff formula gives a form for the composition of their two exponentials  $e^{A}e^{B} = e^{C}$, in terms of an infinite series of commutators, where 
+\[
+  C = A + B + \frac{1}{2}[A,B] + \frac{1}{12} \Big( [A,[A,B]] + [B,[B,A]] \Big) - \frac{1}{24} [B,[A,[A,B]]] \dots
+\]
+This series seems quite complicated, but it is actually quite amenable to a perturbative expansion since it can be viewed as a series of increasing orders of some small parameter, which we call $\tau$.
+Consider a time-independent Hamiltonian $H$ that can be decomposed as the sum of two other operators $H_1$ and $H_2$, i.e. $H = H_1 + H_2$.
+What is the first order approximation of the evolution operator $U(\tau) = e^{ -i\tau(H_1 + H_2)}$ in terms of $U_{1,2}(\tau) = \exp(-i \tau H_{1,2})$?
+
+One can improve this integrations scheme by choosing a combination of time steps in such a way to cancel out the next leading order.
+Verify the second-order Trotter--Suzuki decomposition
+\[
+  U(\tau) = U_1(\tau/2) \, U_2(\tau) \,U_1(\tau/2) + \order(\tau^3) .
+\]
+Higher order expansions are possible but are a bit tedious to calculate\footnote{In general, one can pose
+\[
+  U(\tau) = U_1(c_1 \tau) \, U_2(d_1 \tau) \, U_1(c_2 \tau) \, U_2(d_2 \tau) \dots \, U_1(c_k \tau) \, U_2(d_k\tau) + \order(\tau^{k+1}) .
+\]
+and insert it in the BCH formula with the normalization constraints $\sum_i c_i = \sum_i d_i = 1$.
+The complexity increases very quickly: for example the $\order(\tau^5)$ expansion has 8 equations with $\sim 100$ terms in each. The solution, known as the Forest--Ruth decomposition, circulated unpublished in the particle accelerator community for several years.}.
+Are these higher-order expansions useful for for time-evolution algorithms in tensor networks?
+Consider the drawbacks, taking in account the fact that at some point one has to truncate the bond dimension.
+\end{section}
+
+\begin{section}{Why We Care So Much About SVD}
+One of the successes of tensor networks in quantum information is attributed to their capability of representing states which belong to a small but physically relevant corner of an otherwise prohibitively large Hilbert space, for example where entanglement is low.
+The backbone concepts is that of the \emph{low-rank approximation}.
+Suppose you have some matrix $M$, and you want to compute the closest possible approximation $\tilde{M}^{(k)}$ of rank $k$, which minimizes $\|M -\tilde{M}^{(k)}\|_F$ . 
+The Eckart--Young theorem\footnote{This result was previously found by Schmidt. It was subsequently generalized by Mirsky to show optimality for unitarily-invariant norms.} states that the optimal choice, under the Frobenius norm, is given by the trimmed down singular value decomposition 
+\[
+  \tilde{M}^{(k)} = U\tilde{S}^{(k)} V^\dag,
+\]
+such that $M = USV^\dag$ and $\tilde{S}^{(k)}$ has all but the largest $k$ singular values set to zero.
+
+Now consider an MPS $\ket{\Psi}$, with open boundary conditions.
+Compress a single bond, to find the best approximation $\ket{\tilde{\Psi}}$, and show that 
+\[
+  \braket{\Psi|\tilde{\Psi}} = \trace{\left((\tilde{S}^{(k)})^2\right)}.
+\]
+What does this imply for the distance $\|\ket{\Psi} - \ket{\tilde{\Psi}} \|^2$?
+\end{section}
+
+\begin{section}{AKLT Reloaded*}
+In this exercise, we will be numerically studying the properties of the AKLT state $\ket{\Psi}$ as an MPS (see Homework 3).
+
+\begin{enumerate}[label=(\alph*)]
+  \item Since the state is translationally invariant, you should just store a single tensor $A$. To make sure you defined it correctly, check the gauge condition.
+  \item Construct the transfer matrix $\mathbb{E}$ and its eigenvalues. You should obtain $(1,-1/3,-1/3,-1/3)$.
+  \item Compute the dominant eigenvector $\ket{\rho}$ of the transfer matrix, and normalize it such that $\trace{\rho} = 1$.
+  \item Compute the behavior of the following correlators
+  \begin{align*}
+    \chi^{zz}(r) &= \braket{\Psi | S^z_i S^z_j | \Psi} ,\\
+    \chi^{+-}(r) &= \braket{\Psi | S^+_i S^-_j | \Psi} ,\\ 
+    \chi^{\rm string}(r) &= \braket{\Psi | S^z_i e^{i \pi \sum_{i<\ell<j} S^z_\ell} S^z_j | \Psi} ,
+  \end{align*}
+  for increasing values of $r=|i-j|$ and plot their decay as a function of $r$. 
+  You should do this by defining the transfer matrix for local operators $\mathbb{E}_O = \sum_{i,j} O_{ij}  \bar{A}^{i} \otimes A^{j}$.
+\end{enumerate}
+You should obtain the following behaviors: $\chi^{zz}(r) \sim e^{-r/\xi}$, $\chi^{+-}(r) \sim e^{-r/\xi}$, $\xi = 1/\log 3$, while $\chi^{\rm string}(r) = -4/9$.
+
+These results (which, by the way, are computable analytically), indicate that correlation functions of any local operator decay exponentially (can you guess the decay rate directly from the transfer matrix?). 
+However, there is some kind of hidden order measurable with the string correlator (commonly known as string-order parameter). 
+Can you guess the nature of this hidden order?
+
+\end{section}
+\end{document}
+%%%%%%%%%%% Here Ends Document %%%%%%%%%%
